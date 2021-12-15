@@ -38,4 +38,4 @@ Employee.init(
   }
 );
 
-module.exports = Book;
+module.exports = Employee;
