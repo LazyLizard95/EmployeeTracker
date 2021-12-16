@@ -1,5 +1,6 @@
 const inquirer = require('inquirer');
 const Sequelize = require('sequelize');
+const Employee = require('./models/Employee');
 
 function startApp() {
     inquirer
