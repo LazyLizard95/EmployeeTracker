@@ -46,12 +46,6 @@ function startApp() {
         })
 }
 
-
-
-
-
-
-
 function addDepartment(sql) {
 
 }
@@ -83,26 +77,3 @@ module.exports = startApp;
 
 
 
-// ([{
-//     type: "list",
-//     name: "derpartment",
-//     message: "What derpartment do you belong to?",
-//     choices: [new inquirer.Separator(), "Design", new inquirer.Separator(), "Production", new inquirer.Separator(), "Development", new inquirer.Separator(), "Release", new inquirer.Separator(), "Sales", new inquirer.Separator(), "Legal"]
-// },
-// {
-//     type: "list",
-//     name: "role",
-//     message: `What is your role in your department?`
-//     choices: [new inquirer.Separator()]
-// },
-// {
-//     type: "input",
-//     name: "firstName",
-//     message: "What is your first name?"
-// },
-// {
-//     type: "input",
-//     name: "lastName",
-//     message: `What is your last name?`
-// }
-// ])

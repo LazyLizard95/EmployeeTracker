@@ -9,7 +9,7 @@ function returnMain() {
         }]).then(data => {
             if (data.confirm === true) {
                 startApp();
-            } else { Console.log("Program terminated. CRTL + C to close. Goodbye") }
+            } else { console.log("Program terminated. CRTL + C to close. Goodbye") }
         })
 
 }
