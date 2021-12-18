@@ -1,6 +1,6 @@
 const inquirer = require('inquirer');
 const path = require('path');
-const db = require('config/connection');
+const db = require('./config/connection');
 const cTable = require('console.table');
 function startApp() {
     inquirer
@@ -20,16 +20,16 @@ function startApp() {
                     viewAllEmployees();
                     break;
                 case "Add derpartment":
-                    //function
+                    addDepartment();
                     break;
                 case "Add role":
-                    //function
+                    addRole();
                     break;
                 case "Add employee":
-                    //function
+                    addEmployee();
                     break;
                 case "Update employee":
-                    //function
+                    updateEmployee();
                     break;
                 default:
                     console.log("Case not found");
@@ -40,8 +40,18 @@ function startApp() {
 }
 
 function viewAll(){
-//somelogic
-    startApp();
+    console.table(['derpartments'], employee_roster);
+    inquirer.
+        prompt([{
+            type: "confirm",
+            name: 'confirm',
+            message: 'Return to main menu?'
+        }]).then(data =>{
+            if(data.confirm === true){
+                startApp();
+            }else{viewAll()}
+        })
+    
 }
 
 function viewRoles(){
@@ -52,6 +62,21 @@ function viewAllEmployees(){
 
 }
 
+function addDepartment(){
+
+}
+
+function addRole(){
+
+}
+
+function addEmployee(){
+
+}
+
+function updateEmployee(){
+
+}
 
 //Data.department insert into roles
 //data.role insert into r
@@ -59,15 +84,7 @@ function viewAllEmployees(){
 
 startApp();
 
-console.table([
-    {
-      name: ,
-      age: 10
-    }, {
-      name: 'bar',
-      age: 20
-    }
-  ]);
+
 
 
 
@@ -80,9 +97,10 @@ console.table([
 //     choices: [new inquirer.Separator(), "Design", new inquirer.Separator(), "Production", new inquirer.Separator(), "Development", new inquirer.Separator(), "Release", new inquirer.Separator(), "Sales", new inquirer.Separator(), "Legal"]
 // },
 // {
-//     type: "input",
+//     type: "list",
 //     name: "role",
 //     message: `What is your role in your department?`
+//     choices: [new inquirer.Separator()]  
 // },
 // {
 //     type: "input",

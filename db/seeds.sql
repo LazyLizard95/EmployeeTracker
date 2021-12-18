@@ -2,13 +2,20 @@ INSERT INTO departments (name)
 VALUES
 ('Sales'),
 ('Development'),
-('Design');
+('Design'),
+('Production'),
+('Releases'),
+('Legal');
 
 INSERT INTO roles (title, salary, department_id)
 VALUES
 ('Salesperson', 80000.00, 1),
 ('Designer', 90000.00, 1),
-('Coder', 1000000.00, 1);
+('Coder', 1000000.00, 1),
+('Lawyer', 200000.00, 1),
+('Q&A', 70000.00, 1),
+('Artist', 100000.00, 1);
+
 
 INSERT INTO employees (first_name, last_name, role_id, manager_id)
 VALUES
