@@ -73,7 +73,20 @@ function viewRoles(sql) {
 }
 
 function viewAllEmployees(sql) {
-
+    sql = `SELECT employees.id, employees.first_name, employees.last_name, employees.role_id, employees.manager_id, departments.name
+    AS department
+    FROM employees
+    LEFT JOIN departments
+    ON employees.department_id = departments.id`;
+    db.query(sql, (err, rows) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Here are the employees: ");
+            console.table(rows);
+        }
+        returnMain();
+    })
 }
 
 function addDepartment(sql) {
