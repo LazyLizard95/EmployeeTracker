@@ -11,32 +11,29 @@ function startApp() {
             message: "Please choose an option from the menu",
             choices: ["View all departments", new inquirer.Separator(), "View all roles", new inquirer.Separator(), "View all employees", new inquirer.Separator(), "Add derpartment", new inquirer.Separator(), "Add role", new inquirer.Separator(), "Add employee", new inquirer.Separator(), "Update employee role"]
         }]).then(data => {
-            console.log("wtf")
             let sql;
             let params;
-            console.log(data.nav)
             switch (data.nav) {
                 case "View all departments":
-                console.log("hello")    
                     viewAll(sql);
                     break;
                 case "View all roles":
-                    viewRoles();
+                    viewRoles(sql);
                     break;
                 case "View all employees":
-                    viewAllEmployees();
+                    viewAllEmployees(sql);
                     break;
                 case "Add derpartment":
-                    addDepartment();
+                    addDepartment(sql);
                     break;
                 case "Add role":
-                    addRole();
+                    addRole(sql);
                     break;
                 case "Add employee":
-                    addEmployee();
+                    addEmployee(sql);
                     break;
                 case "Update employee":
-                    updateEmployee();
+                    updateEmployee(sql);
                     break;
                 default:
                     console.log("Case not found");
@@ -58,27 +55,40 @@ function viewAll(sql) {
     })
 }
 
-function viewRoles() {
+function viewRoles(sql) {
+    sql = `SELECT roles.id, roles.title, roles.salary, departments.name
+    AS department
+    FROM roles
+    LEFT JOIN departments
+    ON roles.department_id = departments.id`;
+    db.query(sql, (err, rows) => {
+        if (err) {
+            console.log(err);
+        } else {
+            console.log("Here are the roles: ");
+            console.table(rows);
+        }
+        returnMain();
+    })
+}
+
+function viewAllEmployees(sql) {
 
 }
 
-function viewAllEmployees() {
+function addDepartment(sql) {
 
 }
 
-function addDepartment() {
+function addRole(sql) {
 
 }
 
-function addRole() {
+function addEmployee(sql) {
 
 }
 
-function addEmployee() {
-
-}
-
-function updateEmployee() {
+function updateEmployee(sql) {
 
 }
 
