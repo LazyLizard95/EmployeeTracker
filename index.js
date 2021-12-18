@@ -55,27 +55,27 @@ function viewAll(){
 }
 
 function viewRoles(){
-
+    //fuck
 }
 
 function viewAllEmployees(){
-
+    //my
 }
 
 function addDepartment(){
-
+    //sql
 }
 
 function addRole(){
-
+    //fuck
 }
 
 function addEmployee(){
-
+    //fuck
 }
 
 function updateEmployee(){
-
+    //FUCK
 }
 
 //Data.department insert into roles
