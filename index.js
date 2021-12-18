@@ -1,6 +1,9 @@
 const inquirer = require('inquirer');
 const db = require('./config/connection');
 const cTable = require('console.table');
+const viewAll = require('./commands/viewAll');
+const viewAllEmployees = require('./commands/viewAllEmployees');
+const viewRoles = require('./commands/viewRoles');
 
 function startApp() {
     console.log('Welcome!')
@@ -43,51 +46,11 @@ function startApp() {
         })
 }
 
-function viewAll(sql) {
-    sql = `SELECT * FROM departments`;
-    db.query(sql, (err, rows) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.table(rows);
-        }
-        returnMain()
-    })
-}
 
-function viewRoles(sql) {
-    sql = `SELECT roles.id, roles.title, roles.salary, departments.name
-    AS department
-    FROM roles
-    LEFT JOIN departments
-    ON roles.department_id = departments.id`;
-    db.query(sql, (err, rows) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Here are the roles: ");
-            console.table(rows);
-        }
-        returnMain();
-    })
-}
 
-function viewAllEmployees(sql) {
-    sql = `SELECT employees.id, employees.first_name, employees.last_name, employees.role_id, employees.manager_id, departments.name
-    AS department
-    FROM employees
-    LEFT JOIN departments
-    ON employees.department_id = departments.id`;
-    db.query(sql, (err, rows) => {
-        if (err) {
-            console.log(err);
-        } else {
-            console.log("Here are the employees: ");
-            console.table(rows);
-        }
-        returnMain();
-    })
-}
+
+
+
 
 function addDepartment(sql) {
 
@@ -105,19 +68,7 @@ function updateEmployee(sql) {
 
 }
 
-function returnMain() {
-    inquirer.
-        prompt([{
-            type: "confirm",
-            name: 'confirm',
-            message: 'Return to main menu?'
-        }]).then(data => {
-            if (data.confirm === true) {
-                startApp();
-            } else { viewAll() }
-        })
 
-}
 
 
 //Data.department insert into roles
@@ -127,7 +78,7 @@ function returnMain() {
 startApp();
 
 
-
+module.exports = startApp;
 
 
 
