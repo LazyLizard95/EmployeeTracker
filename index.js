@@ -27,10 +27,10 @@ function startApp() {
                     viewAllEmployees(sql);
                     break;
                 case "Add derpartment":
-                    addDepartment(sql);
+                    addDepartment(sql, params);
                     break;
                 case "Add role":
-                    addRole(sql);
+                    addRole(sql, params);
                     break;
                 case "Add employee":
                     addEmployee(sql);
@@ -46,13 +46,96 @@ function startApp() {
         })
 }
 
-function addDepartment(sql) {
-
+function addDepartment(sql, params) {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "department",
+            message: "Please enter the name of the new department: ",
+            validate: departmentInput => {
+                if (departmentInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a name for the department!');
+                    return false;
+                }
+            }
+        }
+    ])
+    .then(data => {
+        sql = `INSERT INTO departments (name) VALUES (?)`;
+        params = [data.department];
+        db.query(sql, params, (err, rows) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(`${data.department} added!`);
+            }
+            returnMain();
+        });
+    });
 }
 
-function addRole(sql) {
+function addRole(sql, params) {
+    inquirer
+    .prompt([
+        {
+            type: "input",
+            name: "roles",
+            message: "Please enter the name of the new role: ",
+            validate: rolesInput => {
+                if (rolesInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a name for the role!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: "input",
+            name: "salary",
+            message: "Please enter the salary of the new role: ",
+            validate: salaryInput => {
+                if (salaryInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a salary for the role!');
+                    return false;
+                }
+            }
+        },
+        {
+            type: "input",
+            name: "department_id",
+            message: "Please enter the department id: ",
+            validate: departmentIdInput => {
+                if (departmentIdInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a department ID!');
+                    return false;
+                }
+            }
+        },
 
+    ]).then(data => {
+        sql = `INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)`;
+        params = [data.roles, data.salary, data.department_id];
+        db.query(sql, params, (err, rows) => {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log(`${data.role},${data.salary}, ${data.department_id} added!`);
+            }
+            returnMain();
+        });
+    });
 }
+    
+
+
 
 function addEmployee(sql) {
 
@@ -63,6 +146,19 @@ function updateEmployee(sql) {
 }
 
 
+function returnMain() {
+    inquirer.
+        prompt([{
+            type: "confirm",
+            name: 'confirm',
+            message: 'Return to main menu?'
+        }]).then(data => {
+            if (data.confirm === true) {
+                startApp();
+            } else { console.log("Program terminated. CRTL + C to close. Goodbye") }
+        })
+
+}
 
 
 //Data.department insert into roles
@@ -72,7 +168,7 @@ function updateEmployee(sql) {
 startApp();
 
 
-module.exports = startApp;
+
 
 
 

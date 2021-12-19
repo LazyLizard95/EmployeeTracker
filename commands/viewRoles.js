@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-const returnMain = require('../config/returnMain')
+
 function viewRoles(sql) {
     sql = `SELECT roles.id, roles.title, roles.salary, departments.name
     AS department

@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-const returnMain = require('../config/returnMain')
+
 function viewAll(sql) {
     sql = `SELECT * FROM departments`;
     db.query(sql, (err, rows) => {
