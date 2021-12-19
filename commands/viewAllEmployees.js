@@ -1,5 +1,5 @@
 const db = require('../config/connection');
-
+const returnMain = require('../index')
 function viewAllEmployees(sql) {
     sql = `SELECT employees.id, employees.first_name, employees.last_name, roles.title AS title, departments.name AS department, roles.salary AS salary, manager_id AS manager
     FROM employees
