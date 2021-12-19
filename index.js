@@ -4,6 +4,10 @@ const cTable = require('console.table');
 const viewAll = require('./commands/viewAll');
 const viewAllEmployees = require('./commands/viewAllEmployees');
 const viewRoles = require('./commands/viewRoles');
+const addDepartment = require('./commands/addDepartment');
+const addRole = require('./commands/addRole');
+const addEmployee = require('./commands/addEmployee');
+const updateEmployee = require('./commands/updateEmployee');
 
 function startApp() {
     console.log('Welcome!')
@@ -36,7 +40,7 @@ function startApp() {
                     addEmployee(sql, params);
                     break;
                 case "Update employee role":
-                    updateEmployee(sql);
+                    updateEmployee(sql, params);
                     break;
                 default:
                     console.log("Case not found");
@@ -45,217 +49,6 @@ function startApp() {
             }
         })
 }
-
-function addDepartment(sql, params) {
-    inquirer
-        .prompt([
-            {
-                type: "input",
-                name: "department",
-                message: "Please enter the name of the new department: ",
-                validate: departmentInput => {
-                    if (departmentInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter a name for the department!');
-                        return false;
-                    }
-                }
-            }
-        ])
-        .then(data => {
-            sql = `INSERT INTO departments (name) VALUES (?)`;
-            params = [data.department];
-            db.query(sql, params, (err, rows) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log(`${data.department} added!`);
-                }
-                returnMain();
-            });
-        });
-}
-
-function addRole(sql, params) {
-    inquirer
-        .prompt([
-            {
-                type: "input",
-                name: "roles",
-                message: "Please enter the name of the new role: ",
-                validate: rolesInput => {
-                    if (rolesInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter a name for the role!');
-                        return false;
-                    }
-                }
-            },
-            {
-                type: "number",
-                name: "salary",
-                message: "Please enter the salary of the new role: ",
-                validate: salaryInput => {
-                    if (salaryInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter a salary for the role!');
-                        return false;
-                    }
-                }
-            },
-            {
-                type: "number",
-                name: "department_id",
-                message: "Please enter the department id: ",
-                validate: departmentIdInput => {
-                    if (departmentIdInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter a department ID!');
-                        return false;
-                    }
-                }
-            },
-
-        ]).then(data => {
-            sql = `INSERT INTO roles (title, salary, department_id) VALUES (?,?,?)`;
-            params = [data.roles, data.salary, data.department_id];
-            db.query(sql, params, (err, rows) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log(`${data.role}, ${data.salary}, ${data.department_id} added!`);
-                }
-                returnMain();
-            });
-        });
-}
-
-
-
-
-function addEmployee(sql, params) {
-    inquirer
-        .prompt([
-            {
-                type: "input",
-                name: "empF",
-                message: "Please enter the first name: ",
-                validate: nameInput => {
-                    if (nameInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter a first name');
-                        return false;
-                    }
-                }
-            },
-            {
-                type: "input",
-                name: "empL",
-                message: "Please enter the last name: ",
-                validate: lastInput => {
-                    if (lastInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter a last name');
-                        return false;
-                    }
-                }
-            },
-            {
-                type: "number",
-                name: "emp_id",
-                message: "Please enter the role id: ",
-                validate: IdInput => {
-                    if (IdInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter an role ID!');
-                        return false;
-                    }
-                }
-            },
-            {
-                type: "number",
-                name: "mana_id",
-                message: "Please enter the manager id: ",
-                validate: manaIdInput => {
-                    if (manaIdInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter an manager ID!');
-                        return false;
-                    }
-                }
-            },
-
-        ]).then(data => {
-            sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?,?,?,?)`;
-            params = [data.empF, data.empL, data.emp_id, data.mana_id];
-            db.query(sql, params, (err, rows) => {
-                if (err) {
-                    console.log(err);
-                } else {
-                    console.log(`${data.empF}, ${data.empL}, ${data.emp_id}, ${data.mana_id} added!`);
-                }
-                returnMain();
-            });
-        });
-}
-
-function updateEmployee(sql, params) {
-
-
-
-
-    inquirer
-        .prompt([
-            {
-                type: "number",
-                name: "employeeId",
-                message: "Please enter the ID of the employee you'd like to update: ",
-                validate: employeeIdInput => {
-                    if (employeeIdInput) {
-                        return true;
-                    } else {
-                        console.log("Please enter the ID!");
-                        return false;
-                    }
-                }
-            },
-            {
-                type: "number",
-                name: "newRole",
-                message: "Please enter the ID of the new role: ",
-                validate: newRoleInput => {
-                    if (newRoleInput) {
-                        return true;
-                    } else {
-                        console.log("Please enter the new role ID!");
-                        return false;
-                    }
-                }
-            }
-        ])
-        .then(data => {
-            sql = `UPDATE employees SET role_id = ?
-        WHERE id =?`;
-            params = [data.newRole, data.employeeId];
-            db.query(sql, params, (err, rows) => {
-                if (err) {
-                    console.log("Make sure you have the correct ID!");
-                } else {
-                    console.log(`Updated role to: ${data.newRole}`);
-                }
-                returnMain();
-            });
-        });
-}
-
 
 function returnMain() {
     inquirer.
@@ -270,11 +63,6 @@ function returnMain() {
         })
 
 }
-
-
-//Data.department insert into roles
-//data.role insert into r
-//data.
 
 startApp();
 
